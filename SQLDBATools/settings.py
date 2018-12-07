@@ -98,19 +98,6 @@ DATABASES = {
 
 # print("SqlInstance = "+sqlInstance)
 
-# DATABASES = {
-#     'default': {
-#         'NAME': TivoSQLInventory_Ajay',
-#         'ENGINE': 'sql_server.pyodbc',
-#         'HOST': 'tul1dbapmtdb1\SQL2016',
-#         'USER': 'SQLDBATools',
-#         'PASSWORD': 'Pa$$w0rd',
-#         'OPTIONS': {
-#             'driver': 'ODBC Driver 17 for SQL Server',
-#         }
-#     }
-# }
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
