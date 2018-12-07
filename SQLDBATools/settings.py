@@ -1,3 +1,9 @@
+import django_pyodbc
+import os
+import sys
+sys.path.append('c:')
+from SQLDBAToolsInventory_EnvironmentSettings import *
+
 """
 Django settings for SQLDBATools project.
 
@@ -10,8 +16,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-import os
-import django_pyodbc
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,18 +80,36 @@ WSGI_APPLICATION = 'SQLDBATools.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 # pip install django-pyodbc
 # pip install django-pyodbc-azure
+
+# below details are present in file:- C:\SQLDBAToolsInventory_EnvironmentSettings.py
+#   Sample code is present in file ..\SQLDBAToolsInventory_EnvironmentSettings_bak.py
 DATABASES = {
     'default': {
-        'NAME': 'TivoSQLInventory_Ajay',
+        'NAME': databaseName,
         'ENGINE': 'sql_server.pyodbc',
-        'HOST': 'tul1dbapmtdb1\SQL2016',
-        'USER': 'SQLDBATools',
-        'PASSWORD': 'Pa$$w0rd',
+        'HOST': sqlInstance,
+        'USER': userName,
+        'PASSWORD': password,
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
         }
-        }
     }
+}
+
+# print("SqlInstance = "+sqlInstance)
+
+# DATABASES = {
+#     'default': {
+#         'NAME': TivoSQLInventory_Ajay',
+#         'ENGINE': 'sql_server.pyodbc',
+#         'HOST': 'tul1dbapmtdb1\SQL2016',
+#         'USER': 'SQLDBATools',
+#         'PASSWORD': 'Pa$$w0rd',
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#         }
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
