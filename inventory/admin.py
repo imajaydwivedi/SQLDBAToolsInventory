@@ -58,7 +58,7 @@ class DatabasesAdmin(admin.ModelAdmin):
 @admin.register(Backupschedule)
 class BackupscheduleAdmin(admin.ModelAdmin):
     list_display = ['bkuschedid', 'instance_link',
-                    'database_link', 'timefrom', 'timeto']
+                    'timefrom', 'timeto']
 
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
@@ -70,15 +70,11 @@ class BackupscheduleAdmin(admin.ModelAdmin):
         return mark_safe(link)
     instance_link.short_description = 'SqlInstance'
 
-    # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
-    # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
-    def database_link(self, backupschedule):
-        url = reverse("admin:inventory_databases_change",
-                      args=[backupschedule.databaseid.databaseid])
-        link = '<a href="%s">%s</a>' % (url,
-                                        backupschedule.databaseid.databasename)
-        return mark_safe(link)
-    database_link.short_description = 'Database'
+    # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields
+    search_fields = ["instanceid__instancename"]
+
+    # https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site#Add_list_filters
+    list_filter = ['timefrom', 'timeto']
 
 
 @admin.register(Backuphistory)
@@ -105,3 +101,43 @@ class BackuphistoryAdmin(admin.ModelAdmin):
                                         backuphistory.databaseid.databasename)
         return mark_safe(link)
     database_link.short_description = 'Database'
+
+    # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields
+    search_fields = ["instanceid__instancename", "databaseid__databasename"]
+
+
+@admin.register(Commandqueue)
+class CommandqueueAdmin(admin.ModelAdmin):
+    list_display = ['id', 'instance_link', 'database_link',
+                    'command', 'jobtype', 'status', 'reason', 'priority']
+
+    # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
+    # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
+    def instance_link(self, commandqueue):
+        url = reverse("admin:inventory_instance_change",
+                      args=[commandqueue.instanceid.instanceid])
+        link = '<a href="%s">%s</a>' % (url,
+                                        commandqueue.instanceid.instancename)
+        return mark_safe(link)
+    instance_link.short_description = 'SqlInstance'
+
+    # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
+    # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
+    def database_link(self, commandqueue):
+        url = reverse("admin:inventory_databases_change",
+                      args=[commandqueue.databaseid.databaseid])
+        link = '<a href="%s">%s</a>' % (url,
+                                        commandqueue.databaseid.databasename)
+        return mark_safe(link)
+    database_link.short_description = 'Database'
+
+    # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields
+    search_fields = ["instanceid__instancename", "databaseid__databasename"]
+
+    # https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site#Add_list_filters
+    list_filter = ['jobtype', 'status', 'priority']
+
+
+@admin.register(Logging)
+class LoggingAdmin(admin.ModelAdmin):
+    list_display = ['logid', 'logmessage']

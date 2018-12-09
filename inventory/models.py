@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Server(models.Model):
     # Field name made lowercase.
     serverid = models.IntegerField(db_column='ServerID', primary_key=True)
@@ -51,6 +52,9 @@ class Server(models.Model):
     # Field name made lowercase.
     backuppsdeployed = models.BooleanField(
         db_column='BackupPSDeployed', blank=True, null=True)
+    # Field name made lowercase.
+    sqltype = models.CharField(
+        db_column='SQLType', max_length=20, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -73,7 +77,6 @@ class Instance(models.Model):
     instanceid = models.AutoField(db_column='InstanceID', primary_key=True)
     # Field name made lowercase.
     instancename = models.CharField(db_column='InstanceName', max_length=128)
-    # servername = models.CharField("Server Name",max_length=128) # Computed Column
     # Field name made lowercase.
     serverid = models.ForeignKey(
         'Server', models.DO_NOTHING, db_column='ServerID')
@@ -115,6 +118,9 @@ class Instance(models.Model):
     # Field name made lowercase.
     defaultbkupathfree = models.CharField(
         db_column='DefaultBkuPathFree', max_length=20, blank=True, null=True)
+    # Field name made lowercase.
+    maxjobcount = models.IntegerField(
+        db_column='maxJobCount', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -141,6 +147,9 @@ class Databases(models.Model):
     # Field name made lowercase.
     currentdbsize = models.CharField(
         db_column='CurrentDBSize', max_length=10, blank=True, null=True)
+    # Field name made lowercase.
+    backuppath = models.CharField(
+        db_column='BackupPath', max_length=128, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -157,20 +166,76 @@ class Backupschedule(models.Model):
     instanceid = models.ForeignKey(
         'Instance', models.DO_NOTHING, db_column='InstanceId')
     # Field name made lowercase.
-    databaseid = models.ForeignKey(
-        'Databases', models.DO_NOTHING, db_column='DatabaseId')
+    timefrom = models.TimeField(db_column='TimeFrom', blank=True, null=True)
     # Field name made lowercase.
-    timefrom = models.DateTimeField(
-        db_column='TimeFrom', blank=True, null=True)
-    # Field name made lowercase.
-    timeto = models.DateTimeField(db_column='TimeTo', blank=True, null=True)
+    timeto = models.TimeField(db_column='TimeTo', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'BackupSchedule'
 
-    def __str__(self):
-        return self.bkuschedid + '(' + str(self.timefrom) + str(timeto) + ')'
+    # def __str__(self):
+    #     return self.bkuschedid + '(' + str(self.timefrom) + str(timeto) + ')'
+
+
+class Commandqueue(models.Model):
+    # Field name made lowercase.
+    guid = models.CharField(db_column='GUID', max_length=254)
+    # Field name made lowercase.
+    instanceid = models.ForeignKey(
+        'Instance', models.DO_NOTHING, db_column='InstanceId')
+    # Field name made lowercase.
+    databaseid = models.ForeignKey(
+        'Databases', models.DO_NOTHING, db_column='DatabaseId')
+    # Field name made lowercase.
+    command = models.TextField(db_column='Command')
+    # Field name made lowercase.
+    jobid = models.CharField(
+        db_column='jobId', max_length=50, blank=True, null=True)
+    # Field name made lowercase.
+    jobtype = models.CharField(db_column='JobType', max_length=20)
+    # Field name made lowercase.
+    status = models.CharField(db_column='Status', max_length=10)
+    reason = models.TextField(blank=True, null=True)
+    priority = models.IntegerField(blank=True, null=True)
+    # Field name made lowercase.
+    id = models.BigAutoField(db_column='ID', primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'CommandQueue'
+
+
+class Logging(models.Model):
+    # Field name made lowercase.
+    logid = models.AutoField(db_column='logId', primary_key=True)
+    # Field name made lowercase.
+    logmessage = models.TextField(db_column='LogMessage')
+
+    class Meta:
+        managed = False
+        db_table = 'Logging'
+
+
+# class Sqlsyntax(models.Model):
+#     # Field name made lowercase.
+#     syntaxid = models.AutoField(db_column='SyntaxID')
+#     # Field name made lowercase.
+#     sqlversion = models.CharField(db_column='SQLVersion', max_length=128)
+#     # Field name made lowercase.
+#     sqltype = models.CharField(db_column='SQLType', max_length=10)
+#     # Field name made lowercase.
+#     sqlsyntax = models.TextField(db_column='SQLSyntax')
+#     # Field name made lowercase.
+#     syntaxtype = models.CharField(
+#         db_column='SyntaxType', max_length=10, blank=True, null=True)
+#     # Field name made lowercase.
+#     sqlparams = models.CharField(
+#         db_column='SQLParams', max_length=128, blank=True, null=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'SQLSyntax'
 
 
 class Backuphistory(models.Model):
@@ -192,14 +257,14 @@ class Backuphistory(models.Model):
     tranbackupdate = models.DateTimeField(
         db_column='TranBackupDate', blank=True, null=True)
     # Field name made lowercase.
-    fullbackupsize = models.BigIntegerField(
-        db_column='FullBackupSize', blank=True, null=True)
+    fullbackupsize = models.DecimalField(
+        db_column='FullBackupSize', max_digits=20, decimal_places=0, blank=True, null=True)
     # Field name made lowercase.
-    diffbackupsize = models.IntegerField(
-        db_column='DiffBackupSize', blank=True, null=True)
+    diffbackupsize = models.DecimalField(
+        db_column='DiffBackupSize', max_digits=20, decimal_places=0, blank=True, null=True)
     # Field name made lowercase.
-    tranbackupsize = models.IntegerField(
-        db_column='TranBackupSize', blank=True, null=True)
+    tranbackupsize = models.DecimalField(
+        db_column='TranBackupSize', max_digits=20, decimal_places=0, blank=True, null=True)
     # Field name made lowercase.
     fullbackupduration = models.IntegerField(
         db_column='FullBackupDuration', blank=True, null=True)

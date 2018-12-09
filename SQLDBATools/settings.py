@@ -4,6 +4,7 @@ import sys
 sys.path.append('c:')
 from SQLDBAToolsInventory_EnvironmentSettings import *
 
+
 """
 Django settings for SQLDBATools project.
 
