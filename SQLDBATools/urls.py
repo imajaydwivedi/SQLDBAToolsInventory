@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
+from django.conf.urls import include
+from inventory import views as inv_views
+from quiz import views as quiz_views
+from help import views as help_views
+from SQLDBATools import views
 
 urlpatterns = [
+    path('', views.index, name='index'),
+    url(r'^inventory/', include('inventory.urls'), name='inventory'),
+    url(r'^quiz/', include('quiz.urls'), name='quiz'),
+    url(r'^help/', include('help.urls'), name='help'),
     path('admin/', admin.site.urls),
 ]
