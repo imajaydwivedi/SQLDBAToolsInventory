@@ -13,6 +13,12 @@ cd .\Django\SQLDBAToolsInventory
 python manage.py migrate
 
 # ************************************************************************************
+# Register changes to application
+E:
+cd .\Django\SQLDBAToolsInventory
+python manage.py makemigrations inventory
+
+# ************************************************************************************
 # run server
 E:
 cd .\Django\SQLDBAToolsInventory
@@ -21,3 +27,9 @@ python manage.py runserver
 # ************************************************************************************
 # create django user
 python manage.py createsuperuser
+
+# ************************************************************************************
+# Work with shell
+#   https://docs.djangoproject.com/en/2.1/ref/models/querysets/#django.db.models.query.QuerySet
+#   https://docs.djangoproject.com/en/2.1/topics/db/managers/#django.db.models.Manager
+python manage.py shell

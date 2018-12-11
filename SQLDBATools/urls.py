@@ -22,6 +22,7 @@ from quiz import views as quiz_views
 from help import views as help_views
 from SQLDBATools import views
 
+
 urlpatterns = [
     path('', views.index, name='index'),
     url(r'^inventory/', include('inventory.urls'), name='inventory'),
@@ -29,3 +30,7 @@ urlpatterns = [
     url(r'^help/', include('help.urls'), name='help'),
     path('admin/', admin.site.urls),
 ]
+
+# https://stackoverflow.com/a/24983231/4449743
+# https://stackoverflow.com/a/26011790/4449743
+admin.site.site_header = 'TiVoSQL administration'

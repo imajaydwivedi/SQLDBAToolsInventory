@@ -95,6 +95,16 @@ DATABASES = {
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
         }
+    },
+    'quiz': {
+        'NAME': 'Quiz',
+        'ENGINE': 'sql_server.pyodbc',
+        'HOST': 'BAN-1ADWIVEDI-L',
+        'USER': userName,
+        'PASSWORD': password,
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        }
     }
 }
 

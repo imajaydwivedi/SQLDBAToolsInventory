@@ -8,25 +8,93 @@ class Server(models.Model):
     server = models.CharField(
         db_column='Server', max_length=128, blank=True, null=True)
     # Field name made lowercase.
+    DOMAIN_CHOICES = (
+        ('Corporate', 'Corporate'),
+        ('Armus', 'Armus'),
+        ('Angoss', 'Angoss'),
+        ('NA', 'Not Available'),
+    )
     domain = models.CharField(
-        db_column='Domain', max_length=25, blank=True, null=True)
+        db_column='Domain', max_length=25, blank=True, null=True, choices=DOMAIN_CHOICES, default='Corporate')
     # Field name made lowercase.
+    SERVERTYPE_CHOICES = (
+        ('NA', 'Not Available'),
+        ('Cluster Instance', 'Cluster Instance'),
+        ('Decommissioned/To Be Decommissioned',
+         'Decommissioned/To Be Decommissioned'),
+        ('Dev', 'Development'),
+        ('DR', 'Disaster Recovery'),
+        ('DTC Cluster Instance', 'DTC Cluster Instance'),
+        ('Prod', 'Production'),
+        ('Win Cluster', 'Windows Cluster'),
+    )
     servertype = models.CharField(
-        db_column='ServerType', max_length=50, blank=True, null=True)
+        db_column='ServerType', max_length=50, blank=True, null=True, choices=SERVERTYPE_CHOICES, default='Prod')
     # Field name made lowercase.
     shortdescription = models.CharField(
         db_column='ShortDescription', max_length=128, blank=True, null=True)
     # Field name made lowercase.
+    SQLSTATE_CHOICES = (
+        ('Start', 'Started'),
+        ('Stop', 'Stopped'),
+        ('Pause', 'Paused'),
+    )
     sqlstate = models.CharField(
-        db_column='SQLState', max_length=20, blank=True, null=True)
+        db_column='SQLState', max_length=20, blank=True, null=True, choices=SQLSTATE_CHOICES, default='Start')
     # Field name made lowercase.
+    CATEGORY_CHOICES = (
+        ('NA', 'Not Available'),
+        ('Corporate', 'Corporate'),
+        ('IT', 'IT'),
+        ('Product', 'Product'),
+    )
     category = models.CharField(
-        db_column='Category', max_length=20, blank=True, null=True)
+        db_column='Category', max_length=20, blank=True, null=True, choices=CATEGORY_CHOICES, default='Product')
     # Field name made lowercase.
+    BUSINESSUNIT_CHOICES = (
+        ('NA', 'Not Available'),
+        ('Advertising', 'Advertising'),
+        ('Finance', 'Finance'),
+        ('IPG', 'IPG'),
+        ('IT', 'IT'),
+        ('MetaData', 'MetaData'),
+        ('Sales', 'Sales'),
+    )
     businessunit = models.CharField(
-        db_column='BusinessUnit', max_length=20, blank=True, null=True)
+        db_column='BusinessUnit', max_length=20, blank=True, null=True, choices=BUSINESSUNIT_CHOICES, default='MetaData')
     # Field name made lowercase.
-    os = models.CharField(db_column='OS', max_length=64, blank=True, null=True)
+    OS_CHOICES = (
+        ('NA', 'Not Available'),
+        ('Microsoft Windows 2000 Server', 'Microsoft Windows 2000 Server'),
+        ('Microsoft Windows Server 2008  Enterprise',
+         'Microsoft Windows Server 2008  Enterprise'),
+        ('Microsoft Windows Server 2008 R2 Enterprise',
+         'Microsoft Windows Server 2008 R2 Enterprise'),
+        ('Microsoft Windows Server 2008 R2 Standard',
+         'Microsoft Windows Server 2008 R2 Standard'),
+        ('Microsoft Windows Server 2012 R2 Datacenter',
+         'Microsoft Windows Server 2012 R2 Datacenter'),
+        ('Microsoft Windows Server 2012 R2 Standard',
+         'Microsoft Windows Server 2012 R2 Standard'),
+        ('Microsoft Windows Server 2012 Standard',
+         'Microsoft Windows Server 2012 Standard'),
+        ('Microsoft Windows Server 2016 Standard',
+         'Microsoft Windows Server 2016 Standard'),
+        ('Microsoft(R) Windows(R) Server 2003 Enterprise x64 Edition',
+         'Microsoft(R) Windows(R) Server 2003 Enterprise x64 Edition'),
+        ('Microsoft(R) Windows(R) Server 2003 Standard x64 Edition',
+         'Microsoft(R) Windows(R) Server 2003 Standard x64 Edition'),
+        ('Microsoft(R) Windows(R) Server 2003~ Enterprise Edition',
+         'Microsoft(R) Windows(R) Server 2003~ Enterprise Edition'),
+        ('Microsoft(R) Windows(R) Server 2003~ Standard Edition',
+         'Microsoft(R) Windows(R) Server 2003~ Standard Edition'),
+        ('Microsoft® Windows Server® 2008 Enterprise',
+         'Microsoft® Windows Server® 2008 Enterprise'),
+        ('Microsoft® Windows Server® 2008 Standard',
+         'Microsoft® Windows Server® 2008 Standard'),
+    )
+    os = models.CharField(db_column='OS', max_length=64, blank=True, null=True,
+                          choices=OS_CHOICES, default='Microsoft Windows Server 2012 R2 Standard')
     # Field name made lowercase.
     sqlversion = models.CharField(
         db_column='SQLVersion', max_length=64, blank=True, null=True)
@@ -53,15 +121,24 @@ class Server(models.Model):
     backuppsdeployed = models.BooleanField(
         db_column='BackupPSDeployed', blank=True, null=True)
     # Field name made lowercase.
+    SQLTYPE_CHOICES = (
+        ('MSSQL', 'Sql Server'),
+        ('Oracle', 'Oracle'),
+        ('MySQL', 'MySQL'),
+        ('Hadoop', 'Hadoop'),
+        ('Mongo', 'Mongo'),
+        ('SQLlite', 'SQLlite'),
+        ('Other', 'Other')
+    )
     sqltype = models.CharField(
-        db_column='SQLType', max_length=20, blank=True, null=True)
+        db_column='SQLType', max_length=20, blank=True, null=True, choices=SQLTYPE_CHOICES, default='MSSQL')
 
     class Meta:
         managed = False
         db_table = 'Server'
 
-    # def __str__(self):
-    #     return "{}({})".format(self.server, self.serverid)
+    def __str__(self):
+        return "{}  ({})".format(self.server, self.serverid)
 
     # def server_name_id_link(self):
     #     return format_html('<a href="\"span style="color: #{};">{}</span>',
@@ -127,10 +204,11 @@ class Instance(models.Model):
         db_table = 'Instance'
 
     def __str__(self):
-        return self.instancename
+        # return self.instancename
+        return "{}  ({})".format(self.instancename, self.instanceid)
 
 
-class Databases(models.Model):
+class Database(models.Model):
     # Field name made lowercase.
     databaseid = models.AutoField(db_column='DatabaseId', primary_key=True)
     # Field name made lowercase.
@@ -142,8 +220,13 @@ class Databases(models.Model):
     createddate = models.DateTimeField(
         db_column='CreatedDate', blank=True, null=True)
     # Field name made lowercase.
+    RECOVERYMODEL_CHOICES = (
+        ('Simple', 'Simple'),
+        ('Bulk-Logged', 'Bulk-Logged'),
+        ('Full', 'Full'),
+    )
     recoverymodel = models.CharField(
-        db_column='RecoveryModel', max_length=64, blank=True, null=True)
+        db_column='RecoveryModel', max_length=64, blank=True, null=True, choices=RECOVERYMODEL_CHOICES, default='Full')
     # Field name made lowercase.
     currentdbsize = models.CharField(
         db_column='CurrentDBSize', max_length=10, blank=True, null=True)
@@ -156,7 +239,8 @@ class Databases(models.Model):
         db_table = 'Databases'
 
     def __str__(self):
-        return self.databasename
+        # return self.databasename
+        return "{}  ({})".format(self.databasename, self.databaseid)
 
 
 class Backupschedule(models.Model):
@@ -174,8 +258,8 @@ class Backupschedule(models.Model):
         managed = False
         db_table = 'BackupSchedule'
 
-    # def __str__(self):
-    #     return self.bkuschedid + '(' + str(self.timefrom) + str(timeto) + ')'
+    def __str__(self):
+        return self.bkuschedid + '  (' + str(self.timefrom) + ' - ' + str(self.timeto) + ')'
 
 
 class Commandqueue(models.Model):
@@ -186,16 +270,24 @@ class Commandqueue(models.Model):
         'Instance', models.DO_NOTHING, db_column='InstanceId')
     # Field name made lowercase.
     databaseid = models.ForeignKey(
-        'Databases', models.DO_NOTHING, db_column='DatabaseId')
+        'Database', models.DO_NOTHING, db_column='DatabaseId')
     # Field name made lowercase.
     command = models.TextField(db_column='Command')
     # Field name made lowercase.
     jobid = models.CharField(
         db_column='jobId', max_length=50, blank=True, null=True)
     # Field name made lowercase.
-    jobtype = models.CharField(db_column='JobType', max_length=20)
+    JOBTYPE_CHOICES = (
+        ('BKU','BKU'),
+        ('NA','Not Available'),
+    )
+    jobtype = models.CharField(db_column='JobType', max_length=20,choices = JOBTYPE_CHOICES, default='BKU')
     # Field name made lowercase.
-    status = models.CharField(db_column='Status', max_length=10)
+    STATUS_CHOICES = (
+        ('Scheduled','Scheduled'),
+        ('NA','Not Available'),
+    )
+    status = models.CharField(db_column='Status', max_length=10, choices=STATUS_CHOICES, default = 'Scheduled')
     reason = models.TextField(blank=True, null=True)
     priority = models.IntegerField(blank=True, null=True)
     # Field name made lowercase.
@@ -246,7 +338,7 @@ class Backuphistory(models.Model):
         'Instance', models.DO_NOTHING, db_column='InstanceId')
     # Field name made lowercase.
     databaseid = models.ForeignKey(
-        'Databases', models.DO_NOTHING, db_column='DatabaseId')
+        'Database', models.DO_NOTHING, db_column='DatabaseId')
     # Field name made lowercase.
     fullbackupdate = models.DateTimeField(
         db_column='FullbackupDate', blank=True, null=True)

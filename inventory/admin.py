@@ -3,6 +3,22 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from .models import *
+from django.contrib.admin import AdminSite
+from django.utils.translation import ugettext_lazy
+
+
+# class MyAdminSite(AdminSite):
+#     # Text to put at the end of each page's <title>.
+#     site_title = ugettext_lazy('TivoSQL administration')
+
+#     # Text to put in each page's <h1> (and above login form).
+#     site_header = ugettext_lazy('SQLDBATools Inventory')
+
+#     # Text to put at the top of the admin index page.
+#     index_title = ugettext_lazy('TivoSQL administration')
+
+
+# admin_site = MyAdminSite()
 
 
 @admin.register(Server)
@@ -34,7 +50,7 @@ class InstanceAdmin(admin.ModelAdmin):
     search_fields = ['instanceid', 'instancename']
 
 
-@admin.register(Databases)
+@admin.register(Database)
 class DatabasesAdmin(admin.ModelAdmin):
     list_display = ['databaseid', 'instance_link', 'databasename',
                     'createddate', 'recoverymodel', 'currentdbsize']
@@ -95,7 +111,7 @@ class BackuphistoryAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def database_link(self, backuphistory):
-        url = reverse("admin:inventory_databases_change",
+        url = reverse("admin:inventory_database_change",
                       args=[backuphistory.databaseid.databaseid])
         link = '<a href="%s">%s</a>' % (url,
                                         backuphistory.databaseid.databasename)
@@ -124,7 +140,7 @@ class CommandqueueAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def database_link(self, commandqueue):
-        url = reverse("admin:inventory_databases_change",
+        url = reverse("admin:inventory_database_change",
                       args=[commandqueue.databaseid.databaseid])
         link = '<a href="%s">%s</a>' % (url,
                                         commandqueue.databaseid.databasename)
@@ -141,3 +157,4 @@ class CommandqueueAdmin(admin.ModelAdmin):
 @admin.register(Logging)
 class LoggingAdmin(admin.ModelAdmin):
     list_display = ['logid', 'logmessage']
+
