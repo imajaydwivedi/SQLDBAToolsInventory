@@ -140,14 +140,6 @@ class Server(models.Model):
     def __str__(self):
         return "{}  ({})".format(self.server, self.serverid)
 
-    # def server_name_id_link(self):
-    #     return format_html('<a href="\"span style="color: #{};">{}</span>',
-    #                        self.color_code,
-    #                        self.first_name)
-
-    # server_name_id_link.allow_tags = True
-    # server_name_id_link.admin_order_field = 'first_name'
-
 
 class Instance(models.Model):
     # Field name made lowercase.
@@ -233,6 +225,10 @@ class Database(models.Model):
     # Field name made lowercase.
     backuppath = models.CharField(
         db_column='BackupPath', max_length=128, blank=True, null=True)
+    
+    # Custom fields start here
+    # sqlinstance = models.ForeignKey(
+    #     'Instance', models.DO_NOTHING, db_column='InstanceName')
 
     class Meta:
         managed = False
@@ -241,6 +237,9 @@ class Database(models.Model):
     def __str__(self):
         # return self.databasename
         return "{}  ({})".format(self.databasename, self.databaseid)
+
+    # def sqlInstance(self):
+    #     return Instance.objects.filter(instanceid = self.instanceid)[0].instancename
 
 
 class Backupschedule(models.Model):

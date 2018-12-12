@@ -79,3 +79,6 @@ GO
 ALTER TABLE [dbo].[Logging]
 	ADD CONSTRAINT PK_Logging_LogId PRIMARY KEY CLUSTERED (LogId);  
 GO 
+
+CREATE NONCLUSTERED INDEX NCI_Server_ServerName ON dbo.Server(Server)
+GO

@@ -1,3 +1,11 @@
-h1{
+h1,h2 {
   color: royalblue;
+}
+
+a.nav-item.nav-link.active {
+  background: #3BB3C6;
+}
+
+td {
+  font-size: 12px;
 }

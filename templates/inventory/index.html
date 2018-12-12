@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 
 <head>
@@ -6,11 +7,227 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Index Page</title>
+  <!-- https://getbootstrap.com/ -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href='{% static "css/mystyle.css" %}'>
 </head>
 
 <body>
-  <h1>Hello this is templates/inventory/index.html!</h1>
-  {{ insert_me }}
+  <div class="container-fluid">
+    <div>
+      <h2>TiVo SQLDBA Inventory</h2>
+    </div>
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-server-tab" data-toggle="tab" href="#nav-server" role="tab"
+          aria-controls="nav-server" aria-selected="true">Server</a>
+        <a class="nav-item nav-link" id="nav-sqlinstance-tab" data-toggle="tab" href="#nav-sqlinstance" role="tab"
+          aria-controls="nav-sqlinstance" aria-selected="false">SqlInstance</a>
+        <a class="nav-item nav-link" id="nav-database-tab" data-toggle="tab" href="#nav-database" role="tab"
+          aria-controls="nav-database" aria-selected="false">Database</a>
+
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-server" role="tabpanel" aria-labelledby="nav-server-tab">
+        {% if server_records %}
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th>ServerID</th>
+                <th>Server</th>
+                <th>Domain</th>
+                <th>ServerType</th>
+                <th>ShortDescription</th>
+                <th>SQLState</th>
+                <th>Category</th>
+                <th>BusinessUnit</th>
+                <th>OS</th>
+                <th>SQLVersion</th>
+                <th>Sockets</th>
+                <th>Cores</th>
+                <th>LogicalProcs</th>
+                <th>Businessowner</th>
+                <th>TechnicalOwner</th>
+                <th>SecondaryTechnicalOwner</th>
+                <th>AdditionalNotes</th>
+                <th>BackupPSDeployed</th>
+                <th>SQLType</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for rec in server_records %}
+              <tr>
+                <td>{{ rec.serverid }}</td>
+                <td>{{ rec.server }}</td>
+                <td>{{ rec.domain }}</td>
+                <td>{{ rec.servertype }}</td>
+                <td>{{ rec.shortdescription }}</td>
+                <td>{{ rec.sqlstate }}</td>
+                <td>{{ rec.category }}</td>
+                <td>{{ rec.businessunit }}</td>
+                <td>{{ rec.os }}</td>
+                <td>{{ rec.sqlversion }}</td>
+                <td>{{ rec.sockets }}</td>
+                <td>{{ rec.cores }}</td>
+                <td>{{ rec.logicalprocs }}</td>
+                <td>{{ rec.businessowner }}</td>
+                <td>{{ rec.technicalowner }}</td>
+                <td>{{ rec.secondarytechnicalowner }}</td>
+                <td>{{ rec.additionalnotes }}</td>
+                <td>{{ rec.backuppsdeployed }}</td>
+                <td>{{ rec.sqltype }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% if server_records.has_other_pages %}
+        <nav aria-label="Page navigation example"></nav>
+        <ul class="pagination justify-content-center">
+          {% if server_records.has_previous %}
+            <li class="page-item"> <a class="page-link" href="?page={{ 1 }}">First Page</a> </li>
+            {% if server_records.number|add:'-7' > 0 %}
+              <li class="page-item"> <a class="page-link" href="?page={{ server_records.previous_page_number|add:'-6' }}">Previous</a>
+            {% else %}
+              <li class="page-item"> <a class="page-link" href="?page={{ 1 }}">Previous</a>
+            {% endif %}
+          </li>
+
+
+          {% else %}
+          <li class="page-item disabled"> <span class="page-link">First Page</span> </li>
+          {% endif %}
+
+          {% for i in server_records.paginator.page_range %}
+          {% if server_records.number == i %}
+          <li class="page-item active"> <a class="page-link" href="#">{{ i }}</a> </li>
+          {% elif i > server_records.number|add:'-4' and i < server_records.number|add:'4' %} <li class="page-item"> <a
+              class="page-link" href="?page={{ i }}">{{ i }}</a> </li>
+            {% endif %}
+            {% endfor %}
+           
+            {% if server_records.has_next %}
+              {% if server_records.number|add:'7' < server_records.paginator.num_pages %}
+                <li class="page-item"> <a class="page-link" href="?page={{ server_records.next_page_number|add:'6' }}">Next</a>
+            </li>
+              {% else %}
+                <li class="page-item"> <a class="page-link" href="?page={{ server_records.paginator.num_pages }}">Next</a></li>
+              {% endif %}
+              <li class="page-item"> <a class="page-link" href="?page={{ server_records.paginator.num_pages }}">Last Page</a></li>
+            {% else %}
+            <li class="page-item disabled"> <span class="page-link">Last Page</span> </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+        {% else %}
+        <p>No server records found.</p>
+        {% endif %}
+
+
+      </div>
+      <div class="tab-pane fade" id="nav-sqlinstance" role="tabpanel" aria-labelledby="nav-sqlinstance-tab">
+        {% if instance_records %}
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>InstanceID</th>
+                <th>InstanceName</th>
+                <th>ServerID</th>
+                <th>Port</th>
+                <th>IPAddress</th>
+                <th>SQLServiceAccountID</th>
+                <th>AuthenticationMode</th>
+                <th>saAccountName</th>
+                <th>saAccountPassword</th>
+                <th>InstanceClassification</th>
+                <th>InstanceCores</th>
+                <th>InstanceRAM</th>
+                <th>SQLServerAgentAccountID</th>
+                <th>DefaultBkuPath</th>
+                <th>DefaultBkuPathSize</th>
+                <th>DefaultBkuPathFree</th>
+                <th>maxJobCount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for rec in instance_records %}
+              <tr>
+                <td>{{ rec.instanceid }}</td>
+                <td>{{ rec.instancename }}</td>
+                <td>{{ rec.serverid }}</td>
+                <td>{{ rec.port }}</td>
+                <td>{{ rec.ipaddress }}</td>
+                <td>{{ rec.sqlserviceaccountid }}</td>
+                <td>{{ rec.authenticationmode }}</td>
+                <td>{{ rec.saaccountname }}</td>
+                <td>{{ rec.saaccountpassword }}</td>
+                <td>{{ rec.instanceclassification }}</td>
+                <td>{{ rec.instancecores }}</td>
+                <td>{{ rec.instanceram }}</td>
+                <td>{{ rec.sqlserveragentaccountid }}</td>
+                <td>{{ rec.defaultbkupath }}</td>
+                <td>{{ rec.defaultbkupathsize }}</td>
+                <td>{{ rec.defaultbkupathfree }}</td>
+                <td>{{ rec.maxjobcount }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p>No server records found.</p>
+        {% endif %}
+      </div>
+      <div class="tab-pane fade" id="nav-database" role="tabpanel" aria-labelledby="nav-database-tab">
+        {% if database_records %}
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>DatabaseId</th>
+                <th>InstanceId</th>
+                <th>DatabaseName</th>
+                <th>CreatedDate</th>
+                <th>RecoveryModel</th>
+                <th>CurrentDBSize</th>
+                <th>BackupPath</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for rec in database_records %}
+              <tr>
+                <td>{{ rec.databaseid }}</td>
+                <td>{{ rec.instanceid }}</td>
+                <td>{{ rec.databasename }}</td>
+                <td>{{ rec.createddate }}</td>
+                <td>{{ rec.recoverymodel }}</td>
+                <td>{{ rec.currentdbsize }}</td>
+                <td>{{ rec.backuppath }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p>No server records found.</p>
+        {% endif %}
+      </div>
+    </div>
+
+  </div> <!-- Main Container -->
+
 </body>
 
 </html>
