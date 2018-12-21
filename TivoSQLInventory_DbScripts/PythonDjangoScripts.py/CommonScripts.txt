@@ -1,3 +1,18 @@
+# ************************************************************************************
+  #Install virtualenv via pip
+pip install virtualenv
+  #Test your installation
+virtualenv --version
+  #1. Create a virtual environment for a project
+cd my_project_folder
+virtualenv my_project
+  #2. To begin using the virtual environment, it needs to be activated
+source my_project/bin/activate
+  #3. If you are done working in the virtual environment for the moment, you can deactivate it
+deactivate
+
+
+# ************************************************************************************
 # import model from legacy database django
 Step 01: Change database Name to [TivoSQLInventory]
 Step 02: Run below command in Cmd/Powershell
@@ -33,3 +48,8 @@ python manage.py createsuperuser
 #   https://docs.djangoproject.com/en/2.1/ref/models/querysets/#django.db.models.query.QuerySet
 #   https://docs.djangoproject.com/en/2.1/topics/db/managers/#django.db.models.Manager
 python manage.py shell
+
+# ************************************************************************************
+# Install pyyhon-ldap
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#python-ldap
+pip install python_ldap-3.1.0-cp37-cp37m-win32.whl

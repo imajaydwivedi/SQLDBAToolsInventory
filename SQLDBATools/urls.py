@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^quiz/', include('quiz.urls'), name='quiz'),
     url(r'^help/', include('help.urls'), name='help'),
     path('admin/', admin.site.urls),
+    url(r'^login/', include('loginauth.urls'), name='login'),
 ]
 
 # https://stackoverflow.com/a/24983231/4449743

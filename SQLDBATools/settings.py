@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'inventory',
     'quiz',
     'help',
+    'loginauth',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Mail Settings
+EMAIL_USE_TLS = True
+EMAIL_HOST = SmtpHost
+EMAIL_PORT = SmtpPort
+EMAIL_HOST_USER = EmailUser
+EMAIL_HOST_PASSWORD = EmailPassword
