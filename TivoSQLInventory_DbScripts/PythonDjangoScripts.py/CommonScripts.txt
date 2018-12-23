@@ -14,6 +14,7 @@ deactivate
 
 # ************************************************************************************
 # import model from legacy database django
+# https://docs.djangoproject.com/en/2.1/topics/migrations/#the-commands
 Step 01: Change database Name to [TivoSQLInventory]
 Step 02: Run below command in Cmd/Powershell
 

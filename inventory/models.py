@@ -3,7 +3,7 @@ from django.db import models
 
 class Server(models.Model):
     # Field name made lowercase.
-    serverid = models.IntegerField(db_column='ServerID', primary_key=True)
+    serverid = models.AutoField(db_column='ServerID', primary_key=True)
     # Field name made lowercase.
     server = models.CharField(
         db_column='Server', max_length=128, blank=True, null=True)

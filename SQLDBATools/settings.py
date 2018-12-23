@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'inventory',
     'quiz',
     'help',
-    'loginauth',
+    'users',
 ]
 
 MIDDLEWARE = [
