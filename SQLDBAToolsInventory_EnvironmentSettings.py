@@ -1,11 +1,11 @@
 # Declare Global Variable
 databaseName = 'TivoSQLInventory_Ajay'
-sqlInstance = 'tul1dbapmtdb1\\SQL2016'
+sqlInstance = 'localhost\\SQL2016'
 userName = 'SQLDBATools'
-password = 'Pa$$w0rd'
+password = 'YourStrongPasswordHere'
 
 # Email Settings
 SmtpHost = 'smtp.gmail.com'
 SmtpPort = 587
-EmailUser = 'sqlagentservice@gmail.com'
-EmailPassword = 'ruwywxxxshelogdh'
+EmailUser = 'YourGmailID@gmail.com'
+EmailPassword = 'rasdfuwywxxxshetyuioplogdh'
