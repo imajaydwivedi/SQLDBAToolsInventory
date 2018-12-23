@@ -54,3 +54,13 @@ python manage.py shell
 # Install pyyhon-ldap
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#python-ldap
 pip install python_ldap-3.1.0-cp37-cp37m-win32.whl
+
+# ************************************************************************************
+  # Add all files to a commit except a single file?
+https://stackoverflow.com/a/23438899/4449743
+
+# To start ignoring changes to a single already versioned file
+git update-index --assume-unchanged "SQLDBAToolsInventory_EnvironmentSettings.py"
+git update-index --assume-unchanged "__pycache__\SQLDBAToolsInventory_EnvironmentSettings.cpython-37.pyc"
+# and to undo that 
+git update-index --no-assume-unchanged "main/dontcheckmein.txt"
