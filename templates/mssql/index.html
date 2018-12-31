@@ -1,0 +1,76 @@
+<!DOCTYPE htm>
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body_block %}
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-5">
+      <p>
+      <h4>SQL Server Administration</h4>
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-5">
+      <p>
+      <div class="indexCategories">
+        {% if databaseinventory %}
+          <table class="table table-hover table-sm">
+            <thead>
+              <th colspan=3>Database Inventory</th>
+            </thead>
+            <tbody>
+            {% for tbl in databaseinventory %}
+              <tr class="d-flex">
+                <td class="col-8"><a href="{{tbl}}">{{tbl}}</a></td>
+                <td class="col-2"><a href="#"><i style="font-size:16px;color:green;" class="fa">&#xf067;</i> Add</a></td>
+                <td class="col-2"><a href="#"><i style="font-size:16px;color:blue" class="fa">&#xf044;</i> Change</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </div>
+      </p>
+    </div>
+  </div>
+  
+  
+
+  <div class="row">
+    <div class="col-5">
+      <p>
+      <div class="indexCategories">
+        {% if servermaintenance %}
+          <table class="table table-hover table-sm">
+            <thead>
+              <tr>
+                <th colspan=3>Server Maintainenance</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for tbl in servermaintenance %}
+              <tr class="d-flex">
+                <td class="col-8"><a href="{{tbl}}">{{tbl}}</a></td>
+                <td class="col-2"><a href="#"><i style="font-size:16px;color:green;" class="fa">&#xf067;</i> Add</a></td>
+                <td class="col-2"><a href="#"><i style="font-size:16px;color:blue" class="fa">&#xf044;</i> Change</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </div>
+      </p>
+    </div>
+  </div>
+
+  
+
+
+
+
+</div>
+{% endblock body_block %}

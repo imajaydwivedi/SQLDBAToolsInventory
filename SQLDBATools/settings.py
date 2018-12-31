@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'quiz',
     'help',
     'users',
+    'mssql',
 ]
 
 MIDDLEWARE = [

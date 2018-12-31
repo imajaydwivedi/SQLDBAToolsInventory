@@ -24,12 +24,14 @@ from SQLDBATools import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    #path('', views.index, name='index'),
+    path('', include('mssql.urls'), name='index'),
     url(r'^inventory/', include('inventory.urls'), name='inventory'),
     url(r'^quiz/', include('quiz.urls'), name='quiz'),
     url(r'^help/', include('help.urls'), name='help'),
     path('admin/', admin.site.urls),
     url(r'^users/', include('users.urls'), name='users'),
+    url(r'^mssql/', include('mssql.urls'), name='mssql'),
 ]
 
 # https://stackoverflow.com/a/24983231/4449743
