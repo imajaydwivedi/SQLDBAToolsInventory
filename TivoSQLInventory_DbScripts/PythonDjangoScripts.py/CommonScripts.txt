@@ -64,3 +64,27 @@ git update-index --assume-unchanged "SQLDBAToolsInventory_EnvironmentSettings.py
 git update-index --assume-unchanged "__pycache__\SQLDBAToolsInventory_EnvironmentSettings.cpython-37.pyc"
 # and to undo that 
 git update-index --no-assume-unchanged "main/dontcheckmein.txt"
+
+# ************************************************************************************
+  # Custom database Query
+  # https://docs.djangoproject.com/en/2.1/topics/db/sql/#executing-custom-sql-directly
+from django.db import connection
+cursor = connection.cursor()
+cursor.execute("select count(*) from Server")
+row = cursor.fetchone()
+rows = cursor.fetchall()
+
+# ************************************************************************************
+  # Django Template - Get Headers and Table Data
+https://stackoverflow.com/a/6608705/4449743
+objects = Server.objects.values('serverid', 'servername', 'fqdn')
+{% for object in objects %}
+    {% if forloop.first %}
+    <th>
+       {% for fieldname in object.keys %}<td>{{ fieldname }}</td>{% endfor %}
+    </th>
+    {% endif %}
+    <tr>
+      {% for value in object.values %}<td>{{ value }}</td>{% endfor %}
+    </tr>
+{% endfor %}

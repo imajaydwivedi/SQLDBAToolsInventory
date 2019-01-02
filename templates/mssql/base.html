@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block block_autoloader %}
+  <script>
+    $("#navbarSupportedContent").find(".active").removeClass("active")
+    $("#mssql").addClass("active")
+  </script>
+{% endblock block_autoloader %}

@@ -17,22 +17,25 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <Link rel="stylesheet" type="text/css" href='{% static "css/mystyle.css" %}' >
-  <title></title>
+  <title>Database Inventory</title>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <!-- https://getbootstrap.com/docs/4.0/components/navbar/ -->
 
-      <a class="navbar-brand" href="#"><img src='{% static "images/DbFileExplorer_Logo1.png" %}' width="45" height="45" alt='LOGO'>TivoDb Inventory</a>
+      <a class="navbar-brand" href="{% url 'index' %}"><img src='{% static "images/DbFileExplorer_Logo1.png" %}' width="45" height="45" alt='LOGO'>TivoDb Inventory</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">SQL Server <span class="sr-only">(current)</span></a>
+          <li class="nav-item" id="mssql">
+            <a class="nav-link" href="{% url 'mssql:mssqlindex' %}">SQL Server <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin:index' %}" target="_blank">Admin</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">MySQL</a>
@@ -47,7 +50,7 @@
             <a class="nav-link" href="#">Oracle</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Quiz</a>
+            <a class="nav-link" href="{% url 'quiz:quizindex' %}">Quiz</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -67,15 +70,24 @@
         </form>
 
         <ul class="nav navbar-nav  my-2 my-lg-0 mx-4">
-          <li><a href="#"><span class="nav-item mx-2"></span> Login</a></li>
+          <li><a href="{% url 'users:register' %}"><span class="nav-item mx-2"></span> Login</a></li>
           <li><a class="nav-item mx-2" href="#"><img src='{% static "images/cart01.png" %}' width="40" height="40" alt='LOGO'></a></li>
           <li><a href="#" class="nav-item mx-2">Help</a></li>
         </ul>       
         
       </div>
-    
   </nav>
+
+  {% block block_autoloader %}
+    <!-- Some JavaScript that should autoload -->
+  {% endblock block_autoloader %}
   
+
+  {% block page_navigator %}
+    <!-- Page Navigation Links will appear here
+          Home > SqlServer > Category > Table > Action
+    -->
+  {% endblock page_navigator %}
 
   {% block body_block %}
       <!-- Anything outside of this block will be inherited -->
