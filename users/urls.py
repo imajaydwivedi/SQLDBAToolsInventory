@@ -6,7 +6,7 @@ from users import views
 app_name = 'users'
 
 urlpatterns = [
-    url(r'^$', views.index, name='usersindex'),
+    url(r'^$', views.index, name='index'),
     # url(r'signup', views.signup, name='signup'),
     url(r'^register/$', views.register, name='register'),
     #url(r'signup', views.signup, name='signup'),

@@ -11,7 +11,7 @@ app_name = 'mssql'
 # https://docs.djangoproject.com/en/2.1/topics/http/urls/
 urlpatterns = [
     # url(r'^$', index, name='index'),
-    path('', views.index, name='mssqlindex'),
+    path('', views.index, name='index'),
     # url(r'server2', views.server2, name='server2'),
     path('server/', views.server, name='server'),
     path('server/add/', views.serveradd, name='serveradd'),

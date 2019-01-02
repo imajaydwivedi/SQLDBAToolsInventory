@@ -9,5 +9,5 @@ from quiz import views
 app_name = 'quiz'
 
 urlpatterns = [
-    url(r'^$', views.index, name='quizindex'),
+    url(r'^$', views.index, name='index'),
 ]

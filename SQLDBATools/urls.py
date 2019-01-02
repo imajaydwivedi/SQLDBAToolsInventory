@@ -28,7 +28,7 @@ urlpatterns = [
     #path('', views.index, name='index'),
     #path('', include('mssql.urls'), name='index'),
     #path('', usr_views.index, name='index'),
-    path('', prj_views.index, name='index'),
+    path('', prj_views.index, name='projectindex'),
     #path('', tsql_views.index, name='index'),
     path('admin/', admin.site.urls),
     url(r'^users/', include('users.urls'), name='users'),
