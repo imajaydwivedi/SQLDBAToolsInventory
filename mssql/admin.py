@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from .models import *
+from mssql.models import *
 from django.contrib.admin import AdminSite
 from django.utils.translation import ugettext_lazy
 
@@ -26,7 +26,7 @@ class InstanceAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def server_link(self, instance):
-        url = reverse("admin:inventory_server_change",
+        url = reverse("admin:mssql_server_change",
                       args=[instance.serverid.serverid])
         link = '<a href="%s">%s</a>' % (url, instance.serverid.server)
         return mark_safe(link)
@@ -44,7 +44,7 @@ class DatabasesAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def instance_link(self, database):
-        url = reverse("admin:inventory_instance_change",
+        url = reverse("admin:mssql_instance_change",
                       args=[database.instanceid.instanceid])
         link = '<a href="%s">%s</a>' % (url, database.instanceid.instancename)
         return mark_safe(link)
@@ -65,7 +65,7 @@ class BackupscheduleAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def instance_link(self, backupschedule):
-        url = reverse("admin:inventory_instance_change",
+        url = reverse("admin:mssql_instance_change",
                       args=[backupschedule.instanceid.instanceid])
         link = '<a href="%s">%s</a>' % (url,
                                         backupschedule.instanceid.instancename)
@@ -87,7 +87,7 @@ class BackuphistoryAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def instance_link(self, backuphistory):
-        url = reverse("admin:inventory_instance_change",
+        url = reverse("admin:mssql_instance_change",
                       args=[backuphistory.instanceid.instanceid])
         link = '<a href="%s">%s</a>' % (url,
                                         backuphistory.instanceid.instancename)
@@ -97,7 +97,7 @@ class BackuphistoryAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def database_link(self, backuphistory):
-        url = reverse("admin:inventory_database_change",
+        url = reverse("admin:mssql_database_change",
                       args=[backuphistory.databaseid.databaseid])
         link = '<a href="%s">%s</a>' % (url,
                                         backuphistory.databaseid.databasename)
@@ -116,7 +116,7 @@ class CommandqueueAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def instance_link(self, commandqueue):
-        url = reverse("admin:inventory_instance_change",
+        url = reverse("admin:mssql_instance_change",
                       args=[commandqueue.instanceid.instanceid])
         link = '<a href="%s">%s</a>' % (url,
                                         commandqueue.instanceid.instancename)
@@ -126,7 +126,7 @@ class CommandqueueAdmin(admin.ModelAdmin):
     # https://avilpage.com/2017/11/django-tips-tricks-hyperlink-foreignkey-admin.html
     # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#reversing-admin-urls
     def database_link(self, commandqueue):
-        url = reverse("admin:inventory_database_change",
+        url = reverse("admin:mssql_database_change",
                       args=[commandqueue.databaseid.databaseid])
         link = '<a href="%s">%s</a>' % (url,
                                         commandqueue.databaseid.databasename)
@@ -143,4 +143,3 @@ class CommandqueueAdmin(admin.ModelAdmin):
 @admin.register(Logging)
 class LoggingAdmin(admin.ModelAdmin):
     list_display = ['logid', 'logmessage']
-

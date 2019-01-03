@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from users.forms import UserForm, UserProfileInfoForm, LoginForm
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+
+from users.forms import UserForm, UserProfileInfoForm, LoginForm
 
 # Create your views here.
 

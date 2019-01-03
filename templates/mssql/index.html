@@ -24,7 +24,7 @@
             {% for tbl in databaseinventory %}
               <tr class="d-flex">
                 <td class="col-8"><a href="{{tbl|lower}}">{{tbl}}s</a></td>
-                <td class="col-2"><a href="#"><i style="font-size:16px;color:green;" class="fa">&#xf067;</i> Add</a></td>
+                <td class="col-2"><a href="{{tbl|lower}}/add"><i style="font-size:16px;color:green;" class="fa">&#xf067;</i> Add</a></td>
                 <td class="col-2"><a href="#"><i style="font-size:16px;color:blue" class="fa">&#xf044;</i> Change</a></td>
               </tr>
             {% endfor %}

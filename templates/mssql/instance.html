@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block page_navigator %}
+  <div id="PageHeaderNavigation">
+    <ul class="nav bg-primary">
+      <li class="nav-item" id="pagenav-technology">
+        <a class="nav-link text-light" href="#">SQL Instance</a>
+      </li>
+      <li class="nav-item" id="pagenav-category">
+        <a class="nav-link text-light" href="#">Database Inventory</a>
+      </li>
+      <li class="nav-item" id="pagenav-object">
+        <a class="nav-link active text-light" href="#">Instance</a>
+      </li>
+      <li class="nav-item invisible" id="pagenav-action">
+        <a class="nav-link text-light href="#">Add</a>
+      </li>
+    </ul>
+  </div>
+{% endblock page_navigator %}
+
+{% block body_block %}
+<div class="container-fluid">
+  {% if instanceData %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-sm tivotabledata">
+        {% for object in instanceData %}
+          {% if forloop.first %}
+            <thead>
+              <tr class="table-primary">
+                {% for fieldname in object.keys %}<th scope="col">{{ fieldname }}</td>{% endfor %}            
+              </tr>
+            </thead>
+          {% endif %}
+          <tbody class="table-hover">
+            <tr>
+              {% for value in object.values %}<td>{{ value }}</td>{% endfor %}
+            </tr>
+          </tbody>
+        {% endfor %}
+      </table>
+    </div>
+  {% else %}
+    <p> No data to display</p>
+  {% endif %}
+</div>
+{% endblock body_block %}
