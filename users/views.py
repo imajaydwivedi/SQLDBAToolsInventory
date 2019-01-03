@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from users.forms import UserForm,UserProfileInfoForm
+from users.forms import UserForm, UserProfileInfoForm, LoginForm
 from django.core.mail import send_mail
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -8,7 +12,68 @@ from django.core.mail import send_mail
 def index(request):
     return render(request, 'users/index.html')
 
-def register(request):
+
+@login_required
+def special(request):
+    return HttpResponse("You are logged in, Nice!")
+
+
+def user_login(request):
+    loggedin = False
+
+    if request.method == 'POST':
+        login_form = LoginForm(data=request.POST)
+
+        if login_form.is_valid():
+            #username = login_form.cleaned_data['username']
+            username = login_form.cleaned_data['username']
+            password = request.POST.get('password')
+
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    login(request, user)
+                    loggedin = True
+                    return HttpResponseRedirect(reverse('projectindex'))
+                else:
+                    return HttpResponse("Account Not Active")
+            else:
+                print("Someone tried to login and failed!")
+                print("Username: {0} and password {1}".format(
+                    username, password))
+                return HttpResponse("Invalid login details supplied!")
+
+            # If form is Valid, then
+            emailmessage = "username ["+username + \
+                "] tried to login in SQLDBATools portal with password '"+password+"'."
+            admin_email = 'ajay.dwivedi@tivo.com'
+
+            send_mail('Registration - SQLDBAToolsInventory',
+                      emailmessage,
+                      'SQLDBATools@tivo.com',
+                      [admin_email],
+                      fail_silently=False,
+                      )
+
+        else:
+            print("Invalid details submitted!")
+            return HttpResponse("Form details are not valid!")
+
+    else:
+        login_form = LoginForm()
+        return render(request, 'users/login.html', {'login_form': login_form,
+                                                    'loggedin': loggedin,
+                                                    }
+                      )
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('projectindex'))
+
+
+def user_register(request):
     registered = False
 
     if request.method == "POST":
@@ -25,8 +90,15 @@ def register(request):
 
             if 'profile_pic' in request.FILES:
                 profile.profile_pic = request.FILES['profile_pic']
-            
+
             profile.save()
+
+            send_mail('Registration - SQLDBAToolsInventory',
+                      'Thanks for signing up for SQLDBATools portal. We are verifying your details.',
+                      'SQLDBATools@tivo.com',
+                      [user_form.cleaned_data['email']],
+                      fail_silently=False,
+                      )
 
             registered = True
         else:
@@ -34,14 +106,14 @@ def register(request):
     else:
         user_form = UserForm()
         profile_form = UserProfileInfoForm()
-            
 
     return render(request, 'users/registration.html',
-                                {'user_form':user_form,
-                                 'profile_form':profile_form,
-                                 'registered':registered,
-                                }
-    )
+                  {'user_form': user_form,
+                   'profile_form': profile_form,
+                   'registered': registered,
+                   }
+                  )
+
 
 '''
 def signup(request):

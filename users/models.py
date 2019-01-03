@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class UserProfileInfo(models.Model):
-    user = models.OneToOneField(User, models.DO_NOTHING)
+    user = models.OneToOneField(User, models.CASCADE)
 
     # additional
     portfolio_site = models.URLField(blank=True)

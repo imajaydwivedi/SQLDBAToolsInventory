@@ -1,0 +1,15 @@
+{% comment %} https://getbootstrap.com/docs/4.2/components/forms/#form-grid {% endcomment %}
+
+  {% for field in form %}
+  <div class="form-row">
+    <!-- <div class="form-group"> -->
+    {{ field.errors }}
+    <!-- </div> -->
+  </div>
+  <div class="form-row">
+    <div class="form-group col-3">{{ field.label_tag }}</div>
+    <div class="form-group col-6">{{ field }}</div>
+  </div>
+  
+  <div class="form-row"></div>
+  {% endfor %}

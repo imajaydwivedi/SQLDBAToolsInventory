@@ -70,7 +70,15 @@
         </form>
 
         <ul class="nav navbar-nav  my-2 my-lg-0 mx-4">
-          <li><a href="{% url 'users:register' %}"><span class="nav-item mx-2"></span> Login</a></li>
+          <!--
+          <li><a href="{% url 'users:user_login' %}"><span class="nav-item mx-2"></span> Login</a></li>
+          -->
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}"><span class="nav-item mx-2"></span> Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'users:user_login' %}"><span class="nav-item mx-2"></span> Login</a></li>
+          {% endif %}
+
           <li><a class="nav-item mx-2" href="#"><img src='{% static "images/cart01.png" %}' width="40" height="40" alt='LOGO'></a></li>
           <li><a href="#" class="nav-item mx-2">Help</a></li>
         </ul>       

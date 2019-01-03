@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 MEDIA_DIR = os.path.join(BASE_DIR, "media")
+OTHERFILES_DIR = os.path.join(STATIC_DIR, "otherfiles")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -44,11 +45,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'inventory',
+    'easy_timezones',  # https://github.com/Miserlou/django-easy-timezones
+    # for Local Time
     'quiz',
     'help',
     'users',
     'mssql',
 ]
+
+GEOIP_DATABASE = os.path.join(OTHERFILES_DIR, "GeoLiteCity.dat")
+GEOIPV6_DATABASE = os.path.join(OTHERFILES_DIR, "GeoLiteCity.dat")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'easy_timezones.middleware.EasyTimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'SQLDBATools.urls'
@@ -166,6 +173,8 @@ STATICFILES_DIRS = [
 # MEDIA
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+
+LOGIN_URL = '/users/user_login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

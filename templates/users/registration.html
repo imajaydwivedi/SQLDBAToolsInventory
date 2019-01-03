@@ -8,16 +8,19 @@
     <h1> Thank you for registering! </h1>
   {% else %}
     <h1>Register Here!</h1>
+</div>
+<div class="container">
     <h3>Fill out the form:</h3>
 
     <form enctype="multipart/form-data" method="POST">
       {% csrf_token %}
-      {{ user_form.as_p }}
-      {{ profile_form.as_p }}
-      <input type="submit" name="" value="Register">
+      {% include "form_snippet.html" with form=user_form %}
+      {% include "form_snippet.html" with form=profile_form %}
+      
+      <input type="submit" name="" value="Register"  class="btn btn-primary col-auto">
+      
     </form>
   {% endif %}
 </div>
-
 {% endblock body_block %}
 

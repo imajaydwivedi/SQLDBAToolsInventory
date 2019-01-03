@@ -35,8 +35,9 @@ urlpatterns = [
     url(r'^mssql/', include('mssql.urls'), name='mssql'),
     url(r'^quiz/', include('quiz.urls'), name='quiz'),
     url(r'^help/', include('help.urls'), name='help'),
-    
-    
+    # url(r'^login/$', usr_views.user_login, name='login'),
+    url(r'^logout/$', usr_views.user_logout, name = 'logout'),
+    url(r'special/', usr_views.special, name = 'special'),
     
 ]
 
