@@ -10,17 +10,24 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
 
 #from inventory.forms import ServerAddForm
-from mssql.forms import ServerAddForm
+from mssql.forms import ServerAddForm, GetServerInfoForm, AddServerInfoForm
 from SQLDBATools.utils import dictfetchall
 from mssql.models import *
 
+# packages for PowerShell call
+from pypsrp.client import Client
+import json
+from SQLDBAToolsInventory_EnvironmentSettings import powershellbaseservername,proxyusername,proxypassword
+
 # https://docs.djangoproject.com/en/2.1/topics/pagination/
+
 
 @login_required
 def index(request):
     categories = {'databaseinventory': databaseinventory,
                   'servermaintenance': servermaintenance}
     return render(request, 'mssql/index.html', context=categories)
+
 
 @login_required
 def server(request):
@@ -36,6 +43,7 @@ def server(request):
 
     servers = {'serverData': serverData}
     return render(request, 'mssql/server.html', context=servers)
+
 
 @login_required
 def instance(request):
@@ -68,6 +76,7 @@ from dbo.Instance as i join dbo.Server as s on s.ServerID = i.ServerID""")
 
     instances = {'instanceData': instanceData}
     return render(request, 'mssql/instance.html', context=instances)
+
 
 @login_required
 def database(request):
@@ -108,6 +117,8 @@ def server2(request):
     servers = {'serverData': serverData}
     return render(request, 'mssql/server2.html', context=servers)
 
+
+'''
 @login_required
 def serveradd(request):
     form = ServerAddForm()
@@ -134,3 +145,52 @@ SQLDBATools
             redirect('cfman:ServerAdd')
 
     return render(request, 'mssql/serveradd.html', context={'form': form})
+'''
+
+
+# Function to used used for Discovering ServerInfo
+@login_required
+def serveradd(request):
+    getServerInfo = None
+    addServerSubmitted = None
+    serverInfoform = None
+
+    if request.method == 'POST':
+        servername = request.POST.get('ServerName')
+
+        # put code if user wants ServerInfo
+        if 'Get-ServerInfo' in request.POST:
+            print("Get-ServerInfo powershell cmdlet called!")
+            client = Client(powershellbaseservername, username=proxyusername, password=proxypassword, ssl=False)
+
+            #servername = 'tul1dbapmtdb1'
+            #servername = request.POST.get('ServerName')
+            script = r"""
+            Import-Module SQLDBATools -DisableNameChecking;
+            import-module dbatools;
+            Get-ServerInfo '{0}' | ConvertTo-Json | Write-Output
+            """.format(servername)
+
+            output, streams, had_errors = client.execute_ps(script)
+
+            if had_errors:
+                print("Error occurred in powershell script execution")
+                print("ERROR:\n%s" % "\n".join([str(s) for s in streams.error]))
+            else:
+                serverInfo_dict = json.loads(output)
+                print(serverInfo_dict['LastBootTime'])
+            getServerInfo = GetServerInfoForm(serverInfo_dict)
+
+        # if user wants to submit Add-ServerInfo
+        elif 'Add-ServerInfo' in request.POST:
+            print("Add-ServerInfo form submitted!")
+            addServerSubmitted = servername
+    else:
+        print("Add-ServerInfo form called!")
+        serverInfoform = AddServerInfoForm()
+    
+    serverDetails = {   'getServerInfo': getServerInfo,
+                        'addServerSubmitted': addServerSubmitted,
+                        'serverInfoform': serverInfoform,
+                    }
+    return render(request, 'mssql/serveradd.html', context=serverDetails)

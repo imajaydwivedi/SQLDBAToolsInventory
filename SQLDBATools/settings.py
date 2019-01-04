@@ -95,6 +95,15 @@ WSGI_APPLICATION = 'SQLDBATools.wsgi.application'
 
 # below details are present in file:- C:\SQLDBAToolsInventory_EnvironmentSettings.py
 #   Sample code is present in file ..\SQLDBAToolsInventory_EnvironmentSettings_bak.py
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'TivoSQLInventory_Ajay.db'),
+    }
+}
+'''
+
 DATABASES = {
     'default': {
         'NAME': databaseName,
@@ -117,7 +126,7 @@ DATABASES = {
         }
     }
 }
-
+'''
 # print("SqlInstance = "+sqlInstance)
 
 # Password validation

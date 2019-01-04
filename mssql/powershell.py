@@ -2,9 +2,9 @@ from pypsrp.client import Client
 import json
 import time
 import random
+from SQLDBAToolsInventory_EnvironmentSettings import powershellbaseservername,proxyusername,proxypassword
 
-client = Client("tul1dbapmtdb1", username="corporate\\adwivedi",
-                password="Feb@2019", ssl=False)
+client = Client(powershellbaseservername, username=proxyusername, password=proxypassword, ssl=False)
 
 timestr = time.strftime("%Y%m%dT%H%M%S")
 jsonfilepath = 'serverinfo_'+timestr+'_'+str(random.randint(1, 1000))+'.json'

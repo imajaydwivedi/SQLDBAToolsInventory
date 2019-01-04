@@ -4,9 +4,21 @@
   <div class="container">
     <h1> Add new Server </h1>
     <form method="POST">
-      {{ form.as_p }}
       {% csrf_token %}
-      <input type="submit" class="btn btn-primary" value="Add Server">
+
+      {% if serverInfoform %}
+        {{ serverInfoform.as_p }}        
+        <input type="submit" class="btn btn-primary" name="Get-ServerInfo" value="Get-ServerInfo">
+        <!-- <input type="submit" class="btn btn-primary" name="Add-ServerInfo" value="Add-ServerInfo"> -->
+
+      {% elif getServerInfo %}
+        {{ getServerInfo.as_p }}
+        <input type="submit" class="btn btn-primary" name="Add-ServerInfo" value="Add-ServerInfo">
+
+      {% elif addServerSubmitted %}
+        <p> Server [{{ addServerSubmitted }}] has been added in SQLDBATools inventory!</p>
+      {% endif %}
+      
     </form>
   </div>
 {% endblock body_block %}
