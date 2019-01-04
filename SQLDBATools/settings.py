@@ -53,8 +53,8 @@ INSTALLED_APPS = [
     'mssql',
 ]
 
-GEOIP_DATABASE = os.path.join(OTHERFILES_DIR, "GeoLiteCity.dat")
-GEOIPV6_DATABASE = os.path.join(OTHERFILES_DIR, "GeoLiteCity.dat")
+#GEOIP_DATABASE = os.path.join(OTHERFILES_DIR, "GeoLiteCity.dat")
+#GEOIPV6_DATABASE = os.path.join(OTHERFILES_DIR, "GeoLiteCity.dat")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'easy_timezones.middleware.EasyTimezoneMiddleware',
+    #'easy_timezones.middleware.EasyTimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'SQLDBATools.urls'

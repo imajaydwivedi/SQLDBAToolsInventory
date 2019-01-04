@@ -1,3 +1,8 @@
+'''
+  SQL Server pyodbc package
+'''
+pip install django_pyodbc
+
 # For local time on UI
 # https://github.com/Miserlou/django-easy-timezones
 pip install django-easy-timezones
