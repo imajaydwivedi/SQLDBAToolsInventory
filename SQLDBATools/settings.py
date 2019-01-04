@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'inventory',
-    'easy_timezones',  # https://github.com/Miserlou/django-easy-timezones
+    #'easy_timezones',  # https://github.com/Miserlou/django-easy-timezones
     # for Local Time
     'quiz',
     'help',
