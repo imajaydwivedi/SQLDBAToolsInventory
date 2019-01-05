@@ -9,3 +9,8 @@ SmtpHost = 'smtp.gmail.com'
 SmtpPort = 587
 EmailUser = 'YourGmailID@gmail.com'
 EmailPassword = 'rasdfuwywxxxshetyuioplogdh'
+
+# PowerShell Scripts
+powershellbaseservername = "MyBaseServerwithSQLDBAToolsInstalledOnIt"
+proxyusername = "contso\\ajaydwivedi"
+proxypassword = "D0ntTe!!Pa$$w0rd"
