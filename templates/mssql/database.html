@@ -1,22 +1,13 @@
 {% extends "base.html" %}
 
 {% block page_navigator %}
-  <div id="PageHeaderNavigation">
-    <ul class="nav bg-primary">
-      <li class="nav-item" id="pagenav-technology">
-        <a class="nav-link text-light" href="#">SQL Database</a>
-      </li>
-      <li class="nav-item" id="pagenav-category">
-        <a class="nav-link text-light" href="#">Database Inventory</a>
-      </li>
-      <li class="nav-item" id="pagenav-object">
-        <a class="nav-link active text-light" href="#">Databases</a>
-      </li>
-      <li class="nav-item invisible" id="pagenav-action">
-        <a class="nav-link text-light href="#">Add</a>
-      </li>
-    </ul>
-  </div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'projectindex' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mssql:index' %}">MSSQL</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Database</li>
+    </ol>
+  </nav>
 {% endblock page_navigator %}
 
 {% block body_block %}
