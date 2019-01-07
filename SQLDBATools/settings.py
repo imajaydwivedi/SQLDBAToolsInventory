@@ -32,7 +32,7 @@ SECRET_KEY = '1qic!a@l)6^^2ce2x*=u#(mrk^(3f1@mdmw_7r91jmhtg@6tiv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tul1dbapmtdb1','imajaydwivedi.pythonanywhere.com','localhost',]
 
 
 # Application definition
@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'SQLDBATools.wsgi.application'
 
 # below details are present in file:- C:\SQLDBAToolsInventory_EnvironmentSettings.py
 #   Sample code is present in file ..\SQLDBAToolsInventory_EnvironmentSettings_bak.py
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -126,7 +126,7 @@ DATABASES = {
         }
     }
 }
-'''
+
 # print("SqlInstance = "+sqlInstance)
 
 # Password validation
