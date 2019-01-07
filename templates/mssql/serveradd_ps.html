@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block page_navigator %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'projectindex' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mssql:index' %}">MSSQL</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mssql:server' %}">Server</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add</li>
+    </ol>
+  </nav>
+{% endblock page_navigator %}
+
+{% block body_block %}
+  <div class="container">
+    <h1> Add new Server </h1>
+    <form method="POST">
+      {% csrf_token %}
+
+      {% if serverInfoform %}
+        {{ serverInfoform.as_p }}        
+        <input type="submit" class="btn btn-primary" name="Get-ServerInfo" value="Get-ServerInfo">
+        <!-- <input type="submit" class="btn btn-primary" name="Add-ServerInfo" value="Add-ServerInfo"> -->
+
+      {% elif getServerInfo %}
+        {{ getServerInfo.as_p }}
+        <input type="submit" class="btn btn-primary" name="Add-ServerInfo" value="Add-ServerInfo">
+
+      {% elif addServerSubmitted %}
+        <p> Server [{{ addServerSubmitted }}] has been added in SQLDBATools inventory!</p>
+      {% endif %}
+      
+    </form>
+  </div>
+{% endblock body_block %}

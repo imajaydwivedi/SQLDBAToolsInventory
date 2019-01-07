@@ -1,18 +1,38 @@
 from django import forms
-from .models import Server
+from mssql.models import Server, Instance, Database
 
 
 class ServerAddForm(forms.ModelForm):
     # Form fields go here with validators params
     class Meta:
         model = Server
-        # fields = "__all__"
-        # exclude = ["field1","fields2"]
-        fields = ["server", "servertype"]
+        fields = "__all__"
+        exclude = ["serverid"]
+        #fields = ["server", "servertype"]
+
+
+class InstanceAddForm(forms.ModelForm):
+    # Form fields go here with validators params
+    class Meta:
+        model = Instance
+        fields = "__all__"
+        exclude = ["instanceid"]
+        #fields = ["server", "servertype"]
+
+
+class DatabaseAddForm(forms.ModelForm):
+    # Form fields go here with validators params
+    class Meta:
+        model = Database
+        fields = "__all__"
+        exclude = ["databaseid"]
+        #fields = ["server", "servertype"]
 
 
 ''' To Display result of Get-ServerInfo
 '''
+
+
 class GetServerInfoForm(forms.Form):
     ServerName = forms.CharField()
     FQDN = forms.CharField()
@@ -27,7 +47,8 @@ class GetServerInfoForm(forms.Form):
     ParentServerName = forms.CharField(required=False)
     OS = forms.CharField(required=False)
     SPVersion = forms.CharField(required=False)
-    LastBootTime = forms.DateTimeField(widget=forms.DateTimeInput,required=False)
+    LastBootTime = forms.DateTimeField(
+        widget=forms.DateTimeInput, required=False)
     UpTime = forms.CharField(required=False)
     IsVM = forms.BooleanField(required=False)
     Manufacturer = forms.CharField(required=False)
@@ -41,6 +62,8 @@ class GetServerInfoForm(forms.Form):
 ''' To display 3 columns in UI -> ServerName, EnvironmentType, GeneralDescription
     Rest of the columns would be fetched through powershell
 '''
+
+
 class AddServerInfoForm(forms.Form):
     ServerName = forms.CharField()
     SERVERTYPE_CHOICES = (
@@ -51,7 +74,8 @@ class AddServerInfoForm(forms.Form):
         ('Prod', 'Production'),
     )
     #EnvironmentType = forms.CharField(choices=SERVERTYPE_CHOICES, default='NA')
-    EnvironmentType = forms.CharField(label='EnvironmentType',widget=forms.Select(choices=SERVERTYPE_CHOICES))
+    EnvironmentType = forms.CharField(
+        label='EnvironmentType', widget=forms.Select(choices=SERVERTYPE_CHOICES))
     GeneralDescription = forms.CharField(max_length=2000, widget=forms.Textarea(
     ), help_text='Write some other information about server here!', required=False)
 

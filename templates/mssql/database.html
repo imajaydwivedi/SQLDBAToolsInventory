@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "mssql/base.html" %}
 
 {% block page_navigator %}
   <nav aria-label="breadcrumb">
@@ -14,20 +14,29 @@
 <div class="container-fluid">
   {% if databaseData %}
     <div class="table-responsive">
-      <table class="table table-bordered table-hover table-sm tivotabledata">
+      <table id="tivotabledata" class="">      
         {% for object in databaseData %}
           {% if forloop.first %}
             <thead>
-              <tr class="table-primary">
-                {% for fieldname in object.keys %}<th scope="col">{{ fieldname }}</td>{% endfor %}            
+              <tr class="table-danger">
+                {% for fieldname in object.keys %}<th scope="col">{{ fieldname }}</th>{% endfor %}            
               </tr>
             </thead>
+            <tbody class="table-hover">
           {% endif %}
-          <tbody class="table-hover">
+          
             <tr>
               {% for value in object.values %}<td>{{ value }}</td>{% endfor %}
             </tr>
-          </tbody>
+
+          {% if forloop.last %}
+            </tbody>
+            <tfoot>
+              <tr>
+                {% for fieldname in object.keys %}<th scope="col">{{ fieldname }}</th>{% endfor %}            
+              </tr>
+            </tfoot>
+          {% endif %}
         {% endfor %}
       </table>
     </div>
@@ -35,4 +44,5 @@
     <p> No data to display</p>
   {% endif %}
 </div>
+
 {% endblock body_block %}

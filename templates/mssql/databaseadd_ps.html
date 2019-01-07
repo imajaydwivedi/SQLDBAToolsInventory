@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block page_navigator %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'projectindex' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mssql:index' %}">MSSQL</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mssql:database' %}">Database</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add</li>
+    </ol>
+  </nav>
+{% endblock page_navigator %}
+
+{% block body_block %}
+  <div class="container">
+    <h1> Add new Server </h1>
+    <form method="POST">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <input type="submit" class="btn btn-primary" value="Add Server">
+    </form>
+  </div>
+{% endblock body_block %}

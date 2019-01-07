@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "mssql/base.html" %}
 
 {% block page_navigator %}
   <nav aria-label="breadcrumb">
@@ -13,23 +13,31 @@
 
 {% block body_block %}
   <div class="container">
-    <h1> Add new Server </h1>
-    <form method="POST">
-      {% csrf_token %}
+    <div class="card">
+      <h5 class="card-header">Add Server</h5>
+      <div class="card-body">
 
-      {% if serverInfoform %}
-        {{ serverInfoform.as_p }}        
-        <input type="submit" class="btn btn-primary" name="Get-ServerInfo" value="Get-ServerInfo">
-        <!-- <input type="submit" class="btn btn-primary" name="Add-ServerInfo" value="Add-ServerInfo"> -->
+        {% if returnSuccessMessage %}
+          <h5 class="card-title">{{ returnSuccessMessage }}</h5>
+        {% else %}
+          {% if form %}
+            <h5 class="card-title">Kindly provide below details of server:-</h5>
 
-      {% elif getServerInfo %}
-        {{ getServerInfo.as_p }}
-        <input type="submit" class="btn btn-primary" name="Add-ServerInfo" value="Add-ServerInfo">
+            {% if returnErrorMessage %}
+              <div class="text-danger">{{ returnSuccessMessage }}</div>
+            {% endif %}
 
-      {% elif addServerSubmitted %}
-        <p> Server [{{ addServerSubmitted }}] has been added in SQLDBATools inventory!</p>
-      {% endif %}
+            <form method="POST">
+              {% csrf_token %}
+              <p class="card-text">
+                {{ form.as_p }}
+              </p>
+              <input type="submit" class="btn btn-primary" name="Add Server" value="Add Server">
+            </form>
+          {% endif %}
+        {% endif %}
       
-    </form>
+      </div>
+    </div>
   </div>
 {% endblock body_block %}

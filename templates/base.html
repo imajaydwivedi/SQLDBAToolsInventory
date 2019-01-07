@@ -16,7 +16,13 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <Link rel="stylesheet" type="text/css" href='{% static "css/mystyle.css" %}' >
+
+  {% block block_autoloader %}
+    <!-- Some JavaScript that should autoload -->
+  {% endblock block_autoloader %}
+  
   <title>Database Inventory</title>
 </head>
 
@@ -85,10 +91,6 @@
         
       </div>
   </nav>
-
-  {% block block_autoloader %}
-    <!-- Some JavaScript that should autoload -->
-  {% endblock block_autoloader %}
   
 
   {% block page_navigator %}
@@ -101,6 +103,11 @@
       <!-- Anything outside of this block will be inherited -->
   {% endblock body_block %}
 
+
+  {% block block_htmlchangers %}
+      <!-- Anything outside of this block will be inherited -->
+  {% endblock block_htmlchangers %}
+    
 </body> 
 
 </html>

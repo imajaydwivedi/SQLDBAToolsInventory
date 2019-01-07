@@ -2,7 +2,7 @@
 from django.urls import include, path, re_path
 from django.conf.urls import url
 # from django.conf.urls import include
-from . import views
+from mssql import views
 
 # TEMPLATE URLS!
 app_name = 'mssql'
@@ -14,11 +14,13 @@ urlpatterns = [
     path('', views.index, name='index'),
     # url(r'server2', views.server2, name='server2'),
     path('server/', views.server, name='server'),
-    path('server/add/', views.serveradd, name='serveradd'),
+    path('serverx/', views.serverx, name='serverx'),
     path('instance/', views.instance, name='instance'),
-    #path('instance/add/', views.instanceadd, name='instanceadd'),
     path('database/', views.database, name='database'),
-    #path('database/add/', views.databaseadd, name='databaseadd'),
+    path('server/add/', views.serveradd, name='serveradd'),
+    #path('server/add/', views.serveradd_ps, name='serveradd_ps'),
+    path('instance/add/', views.instanceadd, name='instanceadd'),
+    path('database/add/', views.databaseadd, name='databaseadd'),
     # url(r'server/add', views.serveradd, name='serveradd'),
     # url(r'server', views.server, name='server'),
     # url(r'test', views.test, name='test'),

@@ -1,1 +1,48 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+{% block block_autoloader %}
+  <!--
+  <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  -->
+
+  <Link rel="stylesheet" type="text/css" href='{% static "css/datatables.min.css" %}' >
+  <script type="text/javascript" charset="utf8" src='{% static "javascript/datatables.min.js" %}'></script>
+  <!--
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">  
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">  
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/> 
+  <script type="text/javascript" src="DataTables/datatables.min.js"></script>
+  -->
+  <script>
+    $(document).ready( function () {
+        $('#tivotabledata').DataTable({
+          //scrollY: 400,
+          select: true,
+          "lengthChange": true,
+          autoWidth: true,
+          fixedHeader: true,
+
+          columnDefs: [
+            {
+                targets: 0,
+                className: 'dt-body-center'
+            }
+          ]
+        });
+    } );
+
+  </script>
+
+{% endblock block_autoloader %}
+
+{% block block_htmlchangers %}
+<script>
+  $("#tivotabledata").addClass("tivotabledata cell-border compact hover order-column");
+
+</script>
+{% endblock block_htmlchangers %}

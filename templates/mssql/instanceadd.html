@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "mssql/base.html" %}
 
 {% block page_navigator %}
   <nav aria-label="breadcrumb">
@@ -13,11 +13,31 @@
 
 {% block body_block %}
   <div class="container">
-    <h1> Add new Server </h1>
-    <form method="POST">
-      {{ form.as_p }}
-      {% csrf_token %}
-      <input type="submit" class="btn btn-primary" value="Add Server">
-    </form>
+    <div class="card">
+      <h5 class="card-header">Add SqlInstance</h5>
+      <div class="card-body">
+
+        {% if returnSuccessMessage %}
+          <h5 class="card-title">{{ returnSuccessMessage }}</h5>
+        {% else %}
+          {% if form %}
+            <h5 class="card-title">Kindly provide below details for SqlInstance:-</h5>
+
+            {% if returnErrorMessage %}
+              <div class="text-danger">{{ returnSuccessMessage }}</div>
+            {% endif %}
+
+            <form method="POST">
+              {% csrf_token %}
+              <p class="card-text">
+                {{ form.as_p }}
+              </p>
+              <input type="submit" class="btn btn-primary" name="Add Instance" value="Add Instance">
+            </form>
+          {% endif %}
+        {% endif %}
+      
+      </div>
+    </div>
   </div>
 {% endblock body_block %}
